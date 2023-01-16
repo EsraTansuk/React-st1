@@ -1,3 +1,5 @@
+var root = ReactDOM.createRoot(document.getElementById("root"));
+
 var products = [
   {
     name: "IPhone 15",
@@ -21,29 +23,43 @@ var products = [
 //   }
 // }
 
+var selectedProducts = [];
+
 function addProduct(event, pName) {
   console.log(event.target, pName);
+  if (!selectedProducts.includes(pName)){
+    selectedProducts.push(pName);
+  }
+  
+  renderApp();
 }
 
-var template = (
-  <div>
-    <h1 id="header">Ürün Listesi</h1>
+function renderApp() {
+  var template = 
+    <div>
+      <h1 id="header">Ürün Listesi</h1>
+      <h3>Seçili ürünler: { selectedProducts.length }</h3>
 
-    {products.map((product, index) => (
-      <div className="product-details" key={index}>
-        {<h2>{product.name}</h2>}
-        {product.price}
-        <button
-          type="button"
-          id={index}
-          onClick={(event) => addProduct(event, product.name)}
-        >
-          Ekle
-        </button>
-      </div>
-    ))}
-  </div>
-);
+      {products.map((product, index) => (
+        <div className="product-details" key={index}>
+          {<h2>{product.name}</h2>}
+          {product.price}
+          <button
+            type="button"
+            id={index}
+            onClick={(event) => addProduct(event, product.name)}
+          >
+            Ekle
+          </button>
+        </div>
+      ))
+      }
 
-var root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(template);
+    </div>;
+    root.render(template);
+    
+};
+
+renderApp();
+
+
